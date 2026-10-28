@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,359 +9,379 @@
     <link rel="stylesheet" href="creative.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <div id="preloader" class="preloader-wrapper">
-    <div class="loader-content">
-        <div class="glow-ring">
-            <div class="inner-circle"></div>
+        <div class="loader-content">
+            <div class="glow-ring">
+                <div class="inner-circle"></div>
+            </div>
+            <div class="loader-text">Stackly<span>...</span></div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="loader-progress"></div>
+            </div>
+            <div class="percentage" id="loader-percentage">0%</div>
         </div>
-        <div class="loader-text">Stackly<span>...</span></div>
-        <div class="progress-bar-container">
-            <div class="progress-bar" id="loader-progress"></div>
-        </div>
-        <div class="percentage" id="loader-percentage">0%</div>
     </div>
-</div>
-    
-<nav class="navbar" id="navbar">
-    <div class="logo">
-         <a href="index.html" class="logo-container">
+
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <a href="index.html" class="logo-container">
                 <img src="./asset/logo.webp" alt="Company Logo" class="logo-img">
             </a>
-    </div>
-    
-    <ul class="nav-links" id="nav-links">
-        <li><a href="index.html" >Home</a></li>
-        <li><a href="about.html" class="active">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
-         
-        <li><a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-    </ul>
-    
-   
-    <div class="menu-btn" id="menu-btn">
-        <i class="fas fa-bars"></i>
-    </div>
-</nav>
-
-
-<section id="about-hero" class="about-hero-section">
-    <div class="hero-bg-image"></div>
-    <div class="hero-bg-overlay"></div>
-
-    <div class="about-hero-content">
-        <h1 class="gsap-about-title">Know Who <span>I Am</span></h1>
-        <h3 class="gsap-about-subtitle">Designer, Developer & Dreamer</h3>
-        <p class="gsap-about-text">
-            I am a passionate creative developer who loves blending art with technology. Every pixel I push and every line of code I write is driven by a deep desire to build engaging and meaningful digital experiences.
-        </p>
-        <div class="gsap-about-btn-group">
-            <a href="404.html" class="btn primary-btn"><i class="fas fa-arrow-down"></i> Discover My Story</a>
-            <a href="404.html" class="btn outline-btn"><i class="fas fa-briefcase"></i> View Work</a>
-        </div>
-    </div>
-    
-    <div class="about-hero-visual gsap-about-visual">
-        <div class="image-wrapper">
-            <div class="glow-ring"></div>
-            <img src="asset/po9.webp" alt="Creative Developer" class="hero-portrait">
         </div>
 
-        <div class="floating-card card-1 gsap-float-card">
-            <i class="fas fa-lightbulb"></i>
-            <span>Creative</span>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+
+            <li><a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+
+
+        <div class="menu-btn" id="menu-btn">
+            <i class="fas fa-bars"></i>
         </div>
-        <div class="floating-card card-2 gsap-float-card">
-            <i class="fas fa-code"></i>
-            <span>Logical</span>
-        </div>
-        <div class="floating-card card-3 gsap-float-card">
-            <i class="fas fa-rocket"></i>
-            <span>Fast</span>
-        </div>
-    </div>
-</section>
+    </nav>
 
 
+    <section id="about-hero" class="about-hero-section">
+        <div class="hero-bg-image"></div>
+        <div class="hero-bg-overlay"></div>
 
-
-<section id="journey" class="journey-section">
-    <div class="section-heading" data-aos="fade-up">
-        <h2>My <span>Story</span></h2>
-        <p>The path that led me to become a creative developer</p>
-    </div>
-
-    <div class="journey-timeline">
-        <div class="journey-item left" data-aos="fade-right">
-            <div class="journey-icon">
-                <i class="fas fa-seedling"></i>
-            </div>
-            <div class="journey-content">
-                <h3>The Beginning</h3>
-                <span class="journey-year">2019</span>
-                <p>My journey started with a simple curiosity about how websites work. I wrote my first line of HTML and was instantly hooked. That small spark quickly turned into a burning passion for web design and development.</p>
+        <div class="about-hero-content">
+            <h1 class="gsap-about-title">Know Who <span>I Am</span></h1>
+            <h3 class="gsap-about-subtitle">Designer, Developer & Dreamer</h3>
+            <p class="gsap-about-text">
+                I am a passionate creative developer who loves blending art with technology. Every pixel I push and
+                every line of code I write is driven by a deep desire to build engaging and meaningful digital
+                experiences.
+            </p>
+            <div class="gsap-about-btn-group">
+                <a href="404.html" class="btn primary-btn"><i class="fas fa-arrow-down"></i> Discover My Story</a>
+                <a href="404.html" class="btn outline-btn"><i class="fas fa-briefcase"></i> View Work</a>
             </div>
         </div>
 
-        <div class="journey-item right" data-aos="fade-left">
-            <div class="journey-icon">
+        <div class="about-hero-visual gsap-about-visual">
+            <div class="image-wrapper">
+                <div class="glow-ring"></div>
+                <img src="asset/po9.webp" alt="Creative Developer" class="hero-portrait">
+            </div>
+
+            <div class="floating-card card-1 gsap-float-card">
+                <i class="fas fa-lightbulb"></i>
+                <span>Creative</span>
+            </div>
+            <div class="floating-card card-2 gsap-float-card">
                 <i class="fas fa-code"></i>
+                <span>Logical</span>
             </div>
-            <div class="journey-content">
-                <h3>The Grind</h3>
-                <span class="journey-year">2021</span>
-                <p>I spent countless nights learning CSS, JavaScript, and modern frameworks. Building clone websites, debugging errors, and experimenting with UI/UX designs helped me build a strong technical foundation.</p>
-            </div>
-        </div>
-
-        <div class="journey-item left" data-aos="fade-right">
-            <div class="journey-icon">
-                <i class="fas fa-briefcase"></i>
-            </div>
-            <div class="journey-content">
-                <h3>Professional World</h3>
-                <span class="journey-year">2023</span>
-                <p>Started taking on freelance projects and collaborating with international clients. Delivering high-quality, responsive, and animated websites became my core strength, helping brands establish their digital presence.</p>
-            </div>
-        </div>
-
-        <div class="journey-item right" data-aos="fade-left">
-            <div class="journey-icon">
+            <div class="floating-card card-3 gsap-float-card">
                 <i class="fas fa-rocket"></i>
-            </div>
-            <div class="journey-content">
-                <h3>Where I Am Now</h3>
-                <span class="journey-year">2026</span>
-                <p>Today, I am a full-time creative developer specializing in immersive web experiences. I constantly explore new technologies like GSAP and WebGL to push the boundaries of modern web design.</p>
+                <span>Fast</span>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
 
-<section id="vision-mission" class="premium-vm-section">
-    <div class="section-heading" data-aos="fade-up">
-        <h2>Vision & <span>Mission</span></h2>
-        <p>What drives me forward every single day</p>
-    </div>
-    
-    <div class="vm-wrapper">
-        <div class="vm-block gsap-vm-block">
-            <div class="vm-image-container gsap-img-left">
-                <div class="vm-glow"></div>
-                <img src="asset/po5.webp" alt="Vision Image" class="vm-img">
-            </div>
-            <div class="vm-content-box gsap-content-right">
-                <div class="vm-icon-premium">
-                    <i class="fas fa-eye"></i>
+    <section id="journey" class="journey-section">
+        <div class="section-heading" data-aos="fade-up">
+            <h2>My <span>Story</span></h2>
+            <p>The path that led me to become a creative developer</p>
+        </div>
+
+        <div class="journey-timeline">
+            <div class="journey-item left" data-aos="fade-right">
+                <div class="journey-icon">
+                    <i class="fas fa-seedling"></i>
                 </div>
-                <h3>My <span>Vision</span></h3>
-                <p>To redefine the digital landscape by creating highly interactive, accessible, and visually stunning web experiences that inspire and connect people globally. I aim to push the boundaries of modern design and technology.</p>
-            </div>
-        </div>
-
-        <div class="vm-block reverse gsap-vm-block">
-            <div class="vm-image-container gsap-img-right">
-                <div class="vm-glow"></div>
-                <img src="asset/po8.webp" alt="Mission Image" class="vm-img">
-            </div>
-            <div class="vm-content-box gsap-content-left">
-                <div class="vm-icon-premium">
-                    <i class="fas fa-bullseye"></i>
+                <div class="journey-content">
+                    <h3>The Beginning</h3>
+                    <span class="journey-year">2019</span>
+                    <p>My journey started with a simple curiosity about how websites work. I wrote my first line of HTML
+                        and was instantly hooked. That small spark quickly turned into a burning passion for web design
+                        and development.</p>
                 </div>
-                <h3>My <span>Mission</span></h3>
-                <p>To continuously learn and leverage cutting-edge technologies to deliver seamless, performant, and user-centric digital solutions. My focus is on helping forward-thinking brands achieve their goals through clean code and impactful design.</p>
             </div>
-        </div>
-    </div>
-</section>
 
-
-
-
-
-<section id="process" class="process-section">
-    <div class="section-heading" data-aos="fade-up">
-        <h2>My Work <span>Process</span></h2>
-        <p>How I turn ideas into reality step by step</p>
-    </div>
-    
-    <div class="process-container">
-        <div class="process-card" data-aos="fade-up" data-aos-delay="100">
-            <div class="process-icon">
-                <i class="fas fa-search"></i>
-                <span class="step-num">01</span>
+            <div class="journey-item right" data-aos="fade-left">
+                <div class="journey-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="journey-content">
+                    <h3>The Grind</h3>
+                    <span class="journey-year">2021</span>
+                    <p>I spent countless nights learning CSS, JavaScript, and modern frameworks. Building clone
+                        websites, debugging errors, and experimenting with UI/UX designs helped me build a strong
+                        technical foundation.</p>
+                </div>
             </div>
-            <h3>Research</h3>
-            <p>Understanding the project requirements, target audience, and market trends to build a solid foundation.</p>
-        </div>
-        
-        <div class="process-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="process-icon">
-                <i class="fas fa-pencil-ruler"></i>
-                <span class="step-num">02</span>
+
+            <div class="journey-item left" data-aos="fade-right">
+                <div class="journey-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="journey-content">
+                    <h3>Professional World</h3>
+                    <span class="journey-year">2023</span>
+                    <p>Started taking on freelance projects and collaborating with international clients. Delivering
+                        high-quality, responsive, and animated websites became my core strength, helping brands
+                        establish their digital presence.</p>
+                </div>
             </div>
-            <h3>Design</h3>
-            <p>Creating wireframes and highly interactive UI/UX prototypes focusing on aesthetics and user experience.</p>
-        </div>
-        
-        <div class="process-card" data-aos="fade-up" data-aos-delay="300">
-            <div class="process-icon">
-                <i class="fas fa-laptop-code"></i>
-                <span class="step-num">03</span>
-            </div>
-            <h3>Develop</h3>
-            <p>Writing clean, efficient, and scalable code to bring the designs to life using modern web technologies.</p>
-        </div>
-        
-        <div class="process-card" data-aos="fade-up" data-aos-delay="400">
-            <div class="process-icon">
-                <i class="fas fa-rocket"></i>
-                <span class="step-num">04</span>
-            </div>
-            <h3>Deploy</h3>
-            <p>Rigorous testing, optimization, and launching the final product to ensure a flawless digital presence.</p>
-        </div>
-    </div>
-</section>
 
-
-
-
-<section id="tools" class="tools-section">
-    <div class="section-heading" data-aos="fade-up">
-        <h2>Tools & <span>Technologies</span></h2>
-        <p>The software and technologies I use to build digital magic</p>
-    </div>
-    
-    <div class="tools-container">
-        <div class="tool-card" data-aos="zoom-in" data-aos-delay="100">
-            <i class="fab fa-html5"></i>
-            <span>HTML5</span>
-        </div>
-        
-        <div class="tool-card" data-aos="zoom-in" data-aos-delay="200">
-            <i class="fab fa-css3-alt"></i>
-            <span>CSS3</span>
-        </div>
-        
-        <div class="tool-card" data-aos="zoom-in" data-aos-delay="300">
-            <i class="fab fa-js"></i>
-            <span>JavaScript</span>
-        </div>
-        
-        <div class="tool-card" data-aos="zoom-in" data-aos-delay="400">
-            <i class="fab fa-react"></i>
-            <span>React JS</span>
-        </div>
-        
-        <div class="tool-card" data-aos="zoom-in" data-aos-delay="500">
-            <i class="fab fa-node-js"></i>
-            <span>Node.js</span>
-        </div>
-        
-       
-        
-        <div class="tool-card" data-aos="zoom-in" data-aos-delay="800">
-            <i class="fab fa-python"></i>
-            <span>Python</span>
-        </div>
-    </div>
-</section>
-
-
-
-
-<section id="fun-facts" class="premium-facts-section">
-    <div class="section-heading" data-aos="fade-up">
-        <h2>Fun <span>Facts</span></h2>
-        <p>What I do when I'm not coding</p>
-    </div>
-    
-    <div class="facts-accordion" data-aos="fade-up" data-aos-delay="200">
-        
-        <!-- Panel 1: Gamer -->
-        <div class="fact-panel">
-            <img src="asset/po.webp" alt="Gamer" class="panel-bg">
-            <div class="panel-overlay"></div>
-            <div class="panel-content">
-                <div class="icon-box"><i class="fas fa-gamepad"></i></div>
-                <div class="text-content">
-                    <h3>Gamer</h3>
-                    <p>Strategizing and leading teams in competitive multiplayer arenas during my free time.</p>
+            <div class="journey-item right" data-aos="fade-left">
+                <div class="journey-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="journey-content">
+                    <h3>Where I Am Now</h3>
+                    <span class="journey-year">2026</span>
+                    <p>Today, I am a full-time creative developer specializing in immersive web experiences. I
+                        constantly explore new technologies like GSAP and WebGL to push the boundaries of modern web
+                        design.</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Panel 2: Photography -->
-        <div class="fact-panel">
-            <img src="asset/po1.webp" alt="Photography" class="panel-bg">
-            <div class="panel-overlay"></div>
-            <div class="panel-content">
-                <div class="icon-box"><i class="fas fa-camera"></i></div>
-                <div class="text-content">
-                    <h3>Photography</h3>
-                    <p>Capturing the hidden beauty of nature and busy urban streets through my camera lens.</p>
+    </section>
+
+
+
+
+    <section id="vision-mission" class="premium-vm-section">
+        <div class="section-heading" data-aos="fade-up">
+            <h2>Vision & <span>Mission</span></h2>
+            <p>What drives me forward every single day</p>
+        </div>
+
+        <div class="vm-wrapper">
+            <div class="vm-block gsap-vm-block">
+                <div class="vm-image-container gsap-img-left">
+                    <div class="vm-glow"></div>
+                    <img src="asset/po5.webp" alt="Vision Image" class="vm-img">
+                </div>
+                <div class="vm-content-box gsap-content-right">
+                    <div class="vm-icon-premium">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>My <span>Vision</span></h3>
+                    <p>To redefine the digital landscape by creating highly interactive, accessible, and visually
+                        stunning web experiences that inspire and connect people globally. I aim to push the boundaries
+                        of modern design and technology.</p>
+                </div>
+            </div>
+
+            <div class="vm-block reverse gsap-vm-block">
+                <div class="vm-image-container gsap-img-right">
+                    <div class="vm-glow"></div>
+                    <img src="asset/po8.webp" alt="Mission Image" class="vm-img">
+                </div>
+                <div class="vm-content-box gsap-content-left">
+                    <div class="vm-icon-premium">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>My <span>Mission</span></h3>
+                    <p>To continuously learn and leverage cutting-edge technologies to deliver seamless, performant, and
+                        user-centric digital solutions. My focus is on helping forward-thinking brands achieve their
+                        goals through clean code and impactful design.</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Panel 3: Coffee Lover -->
-        <div class="fact-panel">
-            <img src="asset/po2.webp" alt="Coffee Lover" class="panel-bg">
-            <div class="panel-overlay"></div>
-            <div class="panel-content">
-                <div class="icon-box"><i class="fas fa-mug-hot"></i></div>
-                <div class="text-content">
-                    <h3>Coffee Lover</h3>
-                    <p>Fueled by caffeine. I've probably consumed enough espresso to fill a small swimming pool.</p>
+    </section>
+
+
+
+
+
+    <section id="process" class="process-section">
+        <div class="section-heading" data-aos="fade-up">
+            <h2>My Work <span>Process</span></h2>
+            <p>How I turn ideas into reality step by step</p>
+        </div>
+
+        <div class="process-container">
+            <div class="process-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-icon">
+                    <i class="fas fa-search"></i>
+                    <span class="step-num">01</span>
+                </div>
+                <h3>Research</h3>
+                <p>Understanding the project requirements, target audience, and market trends to build a solid
+                    foundation.</p>
+            </div>
+
+            <div class="process-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-icon">
+                    <i class="fas fa-pencil-ruler"></i>
+                    <span class="step-num">02</span>
+                </div>
+                <h3>Design</h3>
+                <p>Creating wireframes and highly interactive UI/UX prototypes focusing on aesthetics and user
+                    experience.</p>
+            </div>
+
+            <div class="process-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="process-icon">
+                    <i class="fas fa-laptop-code"></i>
+                    <span class="step-num">03</span>
+                </div>
+                <h3>Develop</h3>
+                <p>Writing clean, efficient, and scalable code to bring the designs to life using modern web
+                    technologies.</p>
+            </div>
+
+            <div class="process-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="process-icon">
+                    <i class="fas fa-rocket"></i>
+                    <span class="step-num">04</span>
+                </div>
+                <h3>Deploy</h3>
+                <p>Rigorous testing, optimization, and launching the final product to ensure a flawless digital
+                    presence.</p>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section id="tools" class="tools-section">
+        <div class="section-heading" data-aos="fade-up">
+            <h2>Tools & <span>Technologies</span></h2>
+            <p>The software and technologies I use to build digital magic</p>
+        </div>
+
+        <div class="tools-container">
+            <div class="tool-card" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fab fa-html5"></i>
+                <span>HTML5</span>
+            </div>
+
+            <div class="tool-card" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fab fa-css3-alt"></i>
+                <span>CSS3</span>
+            </div>
+
+            <div class="tool-card" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fab fa-js"></i>
+                <span>JavaScript</span>
+            </div>
+
+            <div class="tool-card" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fab fa-react"></i>
+                <span>React JS</span>
+            </div>
+
+            <div class="tool-card" data-aos="zoom-in" data-aos-delay="500">
+                <i class="fab fa-node-js"></i>
+                <span>Node.js</span>
+            </div>
+
+
+
+            <div class="tool-card" data-aos="zoom-in" data-aos-delay="800">
+                <i class="fab fa-python"></i>
+                <span>Python</span>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section id="fun-facts" class="premium-facts-section">
+        <div class="section-heading" data-aos="fade-up">
+            <h2>Fun <span>Facts</span></h2>
+            <p>What I do when I'm not coding</p>
+        </div>
+
+        <div class="facts-accordion" data-aos="fade-up" data-aos-delay="200">
+
+            <!-- Panel 1: Gamer -->
+            <div class="fact-panel">
+                <img src="asset/po.webp" alt="Gamer" class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-content">
+                    <div class="icon-box"><i class="fas fa-gamepad"></i></div>
+                    <div class="text-content">
+                        <h3>Gamer</h3>
+                        <p>Strategizing and leading teams in competitive multiplayer arenas during my free time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2: Photography -->
+            <div class="fact-panel">
+                <img src="asset/po1.webp" alt="Photography" class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-content">
+                    <div class="icon-box"><i class="fas fa-camera"></i></div>
+                    <div class="text-content">
+                        <h3>Photography</h3>
+                        <p>Capturing the hidden beauty of nature and busy urban streets through my camera lens.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3: Coffee Lover -->
+            <div class="fact-panel">
+                <img src="asset/po2.webp" alt="Coffee Lover" class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-content">
+                    <div class="icon-box"><i class="fas fa-mug-hot"></i></div>
+                    <div class="text-content">
+                        <h3>Coffee Lover</h3>
+                        <p>Fueled by caffeine. I've probably consumed enough espresso to fill a small swimming pool.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 4: Traveler -->
+            <div class="fact-panel">
+                <img src="asset/po5.webp" alt="Traveler" class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-content">
+                    <div class="icon-box"><i class="fas fa-plane-departure"></i></div>
+                    <div class="text-content">
+                        <h3>Traveler</h3>
+                        <p>Exploring new cultures, tasting local cuisines, and finding fresh creative inspiration.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+
+    <section id="connect" class="cta-section">
+        <div class="cta-container" data-aos="zoom-in" data-aos-duration="1000">
+            <h2>Let's Create Something <span>Amazing</span></h2>
+            <p>Whether you have a wild idea, a business challenge, or just want to say hi, my inbox is always open.
+                Let's build the future of the web together.</p>
+
+            <div class="cta-actions">
+                <a href="404.html" class="btn"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+                <div class="cta-socials">
+                    <a href="404.html"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="404.html"><i class="fab fa-github"></i></a>
+                    <a href="404.html"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
-        
-        <!-- Panel 4: Traveler -->
-        <div class="fact-panel">
-            <img src="asset/po5.webp" alt="Traveler" class="panel-bg">
-            <div class="panel-overlay"></div>
-            <div class="panel-content">
-                <div class="icon-box"><i class="fas fa-plane-departure"></i></div>
-                <div class="text-content">
-                    <h3>Traveler</h3>
-                    <p>Exploring new cultures, tasting local cuisines, and finding fresh creative inspiration.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
+    </section>
 
 
-
-
-
-<section id="connect" class="cta-section">
-    <div class="cta-container" data-aos="zoom-in" data-aos-duration="1000">
-        <h2>Let's Create Something <span>Amazing</span></h2>
-        <p>Whether you have a wild idea, a business challenge, or just want to say hi, my inbox is always open. Let's build the future of the web together.</p>
-        
-        <div class="cta-actions">
-            <a href="404.html" class="btn"><i class="fas fa-paper-plane"></i> Get In Touch</a>
-            <div class="cta-socials">
-                <a href="404.html"><i class="fab fa-linkedin-in"></i></a>
-                <a href="404.html"><i class="fab fa-github"></i></a>
-                <a href="404.html"><i class="fab fa-twitter"></i></a>
-            </div>
-        </div>
-    </div>
-</section>
-
-
- <footer class="footer-section">
+    <footer class="footer-section">
         <div class="footer-container">
             <div class="footer-about hidden-element">
                 <a href="index.html" class="logo-container">
@@ -418,8 +439,9 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="main.js"></script>
+    <script src="main.js"></script>
 
 
 </body>
+
 </html>

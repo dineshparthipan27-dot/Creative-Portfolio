@@ -63,10 +63,10 @@ loginForm.addEventListener("submit", (e) => {
     const email = document.getElementById("loginEmail").value.trim();
     const pwd = document.getElementById("loginPassword").value;
 
-    if (!role) { 
+    if (!role) {
         document.getElementById("loginRole").classList.add("error-border", "shake");
         setTimeout(() => document.getElementById("loginRole").classList.remove("shake"), 400);
-        isValid = false; 
+        isValid = false;
     } else {
         document.getElementById("loginRole").classList.remove("error-border");
     }
@@ -86,7 +86,7 @@ loginForm.addEventListener("submit", (e) => {
     const btn = loginForm.querySelector("button[type='submit']");
     loading(btn, "Authenticating...");
 
- 
+
     if (role === "admin") {
         localStorage.setItem("adminEmail", email);
     } else {
@@ -97,7 +97,7 @@ loginForm.addEventListener("submit", (e) => {
         if (role === "admin") {
             window.location.href = "admin.html";
         } else {
-            window.location.href = "user.html"; 
+            window.location.href = "user.html";
         }
     }, 1500);
 });
@@ -140,21 +140,21 @@ signupForm.addEventListener("submit", (e) => {
         btn.innerHTML = btn.dataset.original;
         btn.disabled = false;
         signupForm.reset();
-        btnLogin.click(); 
+        btnLogin.click();
     }, 1500);
 });
 
 document.querySelectorAll('input, select').forEach(input => {
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function () {
         this.classList.remove('error-border');
         const errBox = this.nextElementSibling;
-        if(errBox && errBox.classList.contains('error-msg')) {
+        if (errBox && errBox.classList.contains('error-msg')) {
             errBox.style.display = 'none';
         }
-        
- 
+
+
         const parentErrBox = this.parentElement.querySelector('.error-msg');
-        if(parentErrBox) {
+        if (parentErrBox) {
             parentErrBox.style.display = 'none';
         }
     });

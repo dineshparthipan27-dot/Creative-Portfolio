@@ -12,18 +12,18 @@
 
 <body>
 
-<div id="preloader" class="preloader-wrapper">
-    <div class="loader-content">
-        <div class="glow-ring">
-            <div class="inner-circle"></div>
+    <div id="preloader" class="preloader-wrapper">
+        <div class="loader-content">
+            <div class="glow-ring">
+                <div class="inner-circle"></div>
+            </div>
+            <div class="loader-text">Stackly<span>...</span></div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="loader-progress"></div>
+            </div>
+            <div class="percentage" id="loader-percentage">0%</div>
         </div>
-        <div class="loader-text">Stackly<span>...</span></div>
-        <div class="progress-bar-container">
-            <div class="progress-bar" id="loader-progress"></div>
-        </div>
-        <div class="percentage" id="loader-percentage">0%</div>
     </div>
-</div>
 
 
 
@@ -40,7 +40,7 @@
             <li><a href="services.html">Services</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
-             
+
             <li><a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
         </ul>
 
@@ -51,20 +51,20 @@
     </nav>
 
 
-     
+
     <section id="home" class="hero">
 
-         
+
         <div class="slideshow">
             <div class="slide slide-1"></div>
             <div class="slide slide-2"></div>
             <div class="slide slide-3"></div>
         </div>
 
-         
+
         <div class="overlay"></div>
 
-         
+
         <div class="hero-content">
             <h3 class="gsap-text">Hello, I'm</h3>
             <h1 class="gsap-text">Un Peru <span>(Shree)</span></h1>
@@ -74,7 +74,7 @@
                 experiences. Transforming ideas into reality with elegant code and a touch of magic.
             </p>
 
-             
+
             <div class="social-icons gsap-text">
                 <a href="404.html"><i class="fab fa-facebook-f"></i></a>
                 <a href="404.html"><i class="fab fa-twitter"></i></a>
@@ -83,14 +83,14 @@
                 <a href="404.html"><i class="fab fa-github"></i></a>
             </div>
 
-             
+
             <div class="gsap-btn">
                 <a href="404.html" class="btn">Hire Me</a>
                 <a href="404.html" class="btn btn-outline">My Work</a>
             </div>
         </div>
 
-         
+
         <div class="hero-img gsap-image">
             <div class="img-box">
 
@@ -685,20 +685,20 @@
 
 
     <script>
- 
+
         document.addEventListener("DOMContentLoaded", () => {
 
- 
+
             gsap.from(".gsap-text", {
                 opacity: 0,
-                y: 50,  
+                y: 50,
                 duration: 1,
-                stagger: 0.2,  
+                stagger: 0.2,
                 ease: "power3.out",
                 delay: 0.2
             });
 
- 
+
             gsap.from(".gsap-btn", {
                 opacity: 0,
                 y: 30,
@@ -707,7 +707,7 @@
                 delay: 1.2
             });
 
- 
+
             gsap.from(".gsap-image", {
                 opacity: 0,
                 scale: 0.8,
@@ -721,22 +721,22 @@
 
 
         document.addEventListener("DOMContentLoaded", () => {
- 
+
             const skillElements = document.querySelectorAll(".progress-line, .circle-fill");
 
- 
+
             const skillObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
- 
+
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
- 
-                        observer.unobserve(entry.target);
-                    }   
-                });
-            }, { threshold: 0.5 }); 
 
- 
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+
             skillElements.forEach(el => {
                 skillObserver.observe(el);
             });

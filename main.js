@@ -1,4 +1,4 @@
- 
+
 const navbar = document.getElementById("navbar");
 
 window.addEventListener("scroll", () => {
@@ -9,17 +9,17 @@ window.addEventListener("scroll", () => {
     }
 });
 
- 
+
 const menuBtn = document.getElementById("menu-btn");
 const navLinks = document.getElementById("nav-links");
 const menuIcon = menuBtn.querySelector("i");
 
 menuBtn.addEventListener("click", () => {
- 
+
     navLinks.classList.toggle("active");
-    
- 
-    if(navLinks.classList.contains("active")){
+
+
+    if (navLinks.classList.contains("active")) {
         menuIcon.classList.remove("fa-bars");
         menuIcon.classList.add("fa-times");
     } else {
@@ -28,7 +28,7 @@ menuBtn.addEventListener("click", () => {
     }
 });
 
- 
+
 const navItems = document.querySelectorAll(".nav-links li a");
 navItems.forEach(item => {
     item.addEventListener("click", () => {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
-        
+
         const emailValue = emailInput.value.trim();
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
             msg.className = "validation-msg success";
             form.classList.remove("error-border");
             emailInput.value = "";
-            
+
             setTimeout(() => {
                 msg.textContent = "";
                 msg.className = "validation-msg";
@@ -97,18 +97,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const percentageText = document.getElementById('loader-percentage');
     const preloader = document.getElementById('preloader');
 
-    
+
     const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 15) + 5; 
-        
+        progress += Math.floor(Math.random() * 15) + 5;
+
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
-            
+
             progressBar.style.width = "100%";
             percentageText.innerText = "100%";
-            
-            
+
+
             setTimeout(() => {
                 if (typeof gsap !== 'undefined') {
                     gsap.to(preloader, {
@@ -121,16 +121,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     });
                 } else {
-                    
+
                     preloader.style.transition = "opacity 0.8s ease";
                     preloader.style.opacity = "0";
                     setTimeout(() => preloader.style.display = "none", 800);
                 }
-            }, 300); 
-            
+            }, 300);
+
         } else {
             progressBar.style.width = `${progress}%`;
             percentageText.innerText = `${progress}%`;
         }
-    }, 150); 
+    }, 150);
 });
