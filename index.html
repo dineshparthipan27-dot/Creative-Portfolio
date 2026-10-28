@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="creative.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<div id="preloader" class="preloader-wrapper">
+    <div class="loader-content">
+        <div class="glow-ring">
+            <div class="inner-circle"></div>
+        </div>
+        <div class="loader-text">Stackly<span>...</span></div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="loader-progress"></div>
+        </div>
+        <div class="percentage" id="loader-percentage">0%</div>
+    </div>
+</div>
+
+
+
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <a href="index.html" class="logo-container">
+                <img src="./asset/logo.webp" alt="Company Logo" class="logo-img">
+            </a>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+             
+            <li><a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+
+
+        <div class="menu-btn" id="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+
+     
+    <section id="home" class="hero">
+
+         
+        <div class="slideshow">
+            <div class="slide slide-1"></div>
+            <div class="slide slide-2"></div>
+            <div class="slide slide-3"></div>
+        </div>
+
+         
+        <div class="overlay"></div>
+
+         
+        <div class="hero-content">
+            <h3 class="gsap-text">Hello, I'm</h3>
+            <h1 class="gsap-text">Un Peru <span>(Shree)</span></h1>
+            <h2 class="gsap-text">And I'm a <span class="designation">Creative Web Developer</span></h2>
+            <p class="gsap-text">
+                Welcome to my creative universe! I build interactive, responsive, and visually stunning digital
+                experiences. Transforming ideas into reality with elegant code and a touch of magic.
+            </p>
+
+             
+            <div class="social-icons gsap-text">
+                <a href="404.html"><i class="fab fa-facebook-f"></i></a>
+                <a href="404.html"><i class="fab fa-twitter"></i></a>
+                <a href="404.html"><i class="fab fa-instagram"></i></a>
+                <a href="404.html"><i class="fab fa-linkedin-in"></i></a>
+                <a href="404.html"><i class="fab fa-github"></i></a>
+            </div>
+
+             
+            <div class="gsap-btn">
+                <a href="404.html" class="btn">Hire Me</a>
+                <a href="404.html" class="btn btn-outline">My Work</a>
+            </div>
+        </div>
+
+         
+        <div class="hero-img gsap-image">
+            <div class="img-box">
+
+                <img src="asset/po4.webp" alt="My Profile">
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="about" class="about-section">
+        <div class="about-image-wrapper">
+            <div class="about-shape"></div>
+            <img src="asset/po2.webp" alt="About Me">
+        </div>
+
+        <div class="about-content">
+            <h2 class="section-title">About <span>Me</span></h2>
+            <h3 class="about-subtitle">Transforming ideas into digital reality</h3>
+            <p>I am a passionate creative web developer with a keen eye for aesthetics and a strong foundation in modern
+                web technologies. My journey started with a simple curiosity about how websites work, which quickly
+                evolved into a full-blown passion for crafting immersive digital experiences.</p>
+            <p>Every line of code I write is aimed at creating a seamless user experience. When I'm not coding, you can
+                find me exploring new design trends, learning new frameworks, or brainstorming my next big project.</p>
+
+            <div class="about-stats">
+                <div class="stat-box">
+                    <h4>5+</h4>
+                    <span>Years Experience</span>
+                </div>
+                <div class="stat-box">
+                    <h4>50+</h4>
+                    <span>Projects Done</span>
+                </div>
+            </div>
+
+            <a href="404.html" class="btn">Download CV</a>
+        </div>
+    </section>
+
+
+
+
+    <section id="skills" class="skills-section">
+        <h2 class="section-title">My <span>Skills</span></h2>
+
+        <div class="skills-container">
+            <div class="skills-box">
+                <h3 class="skills-subtitle">Technical Skills</h3>
+
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span>HTML / CSS</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-line" style="--target-width: 95%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span>JavaScript</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-line" style="--target-width: 85%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span>React JS</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-line" style="--target-width: 80%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span>Python / Django</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-line" style="--target-width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-box">
+                <h3 class="skills-subtitle">Creative Skills</h3>
+
+                <div class="circular-skills-container">
+                    <div class="circle-item">
+                        <svg class="radial-progress" width="160" height="160">
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-fill" cx="80" cy="80" r="70" style="--target-offset: 66;"></circle>
+                        </svg>
+                        <div class="percentage">85%</div>
+                        <span class="circle-text">UI/UX Design</span>
+                    </div>
+
+                    <div class="circle-item">
+                        <svg class="radial-progress" width="160" height="160">
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-fill" cx="80" cy="80" r="70" style="--target-offset: 44;"></circle>
+                        </svg>
+                        <div class="percentage">90%</div>
+                        <span class="circle-text">Creativity</span>
+                    </div>
+
+                    <div class="circle-item">
+                        <svg class="radial-progress" width="160" height="160">
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-fill" cx="80" cy="80" r="70" style="--target-offset: 110;"></circle>
+                        </svg>
+                        <div class="percentage">75%</div>
+                        <span class="circle-text">Problem Solving</span>
+                    </div>
+
+                    <div class="circle-item">
+                        <svg class="radial-progress" width="160" height="160">
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-fill" cx="80" cy="80" r="70" style="--target-offset: 88;"></circle>
+                        </svg>
+                        <div class="percentage">80%</div>
+                        <span class="circle-text">Team Work</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="services" class="services-section">
+        <h2 class="section-title">My <span>Services</span></h2>
+
+        <div class="services-container">
+            <div class="service-card hidden-element">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Web Development</h3>
+                <p>Building responsive, high-performance websites using the latest modern technologies.</p>
+            </div>
+
+            <div class="service-card hidden-element">
+                <i class="fas fa-paint-brush"></i>
+                <h3>UI/UX Design</h3>
+                <p>Creating intuitive and user-centric interfaces that offer seamless digital experiences.</p>
+            </div>
+
+            <div class="service-card hidden-element">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>App Development</h3>
+                <p>Designing and developing cross-platform mobile applications for iOS and Android.</p>
+            </div>
+
+            <div class="service-card hidden-element">
+                <i class="fas fa-search-dollar"></i>
+                <h3>SEO Optimization</h3>
+                <p>Enhancing website visibility and ranking on search engines to drive organic traffic.</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="portfolio" class="portfolio-section">
+        <h2 class="section-title">My <span>Work</span></h2>
+
+        <div class="filter-buttons hidden-element">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web Design</button>
+            <button class="filter-btn" data-filter="app">App Dev</button>
+            <button class="filter-btn" data-filter="design">UI/UX</button>
+        </div>
+
+        <div class="portfolio-gallery">
+            <div class="portfolio-item hidden-element" data-category="web">
+                <img src="asset/po5.webp" alt="Web Project 1">
+                <div class="portfolio-overlay">
+                    <h3>E-Commerce Website</h3>
+                    <p>Web Design</p>
+                    <a href="404.html"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-item hidden-element" data-category="design">
+                <img src="asset/po6.webp" alt="Design Project 1">
+                <div class="portfolio-overlay">
+                    <h3>Brand Identity</h3>
+                    <p>UI/UX Design</p>
+                    <a href="404.html"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-item hidden-element" data-category="app">
+                <img src="asset/po7.webp" alt="App Project 1">
+                <div class="portfolio-overlay">
+                    <h3>Fitness Tracker App</h3>
+                    <p>App Development</p>
+                    <a href="404.html"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-item hidden-element" data-category="web">
+                <img src="asset/po8.webp" alt="Web Project 2">
+                <div class="portfolio-overlay">
+                    <h3>Portfolio Template</h3>
+                    <p>Web Design</p>
+                    <a href="404.html"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-item hidden-element" data-category="design">
+                <img src="asset/po9.webp" alt="Design Project 2">
+                <div class="portfolio-overlay">
+                    <h3>Dashboard UI</h3>
+                    <p>UI/UX Design</p>
+                    <a href="404.html"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-item hidden-element" data-category="app">
+                <img src="asset/po10.webp" alt="App Project 2">
+                <div class="portfolio-overlay">
+                    <h3>Social Media App</h3>
+                    <p>App Development</p>
+                    <a href="404.html"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="experience" class="experience-section">
+        <h2 class="section-title">My <span>Experience</span></h2>
+
+        <div class="timeline">
+            <div class="timeline-item left-container">
+                <div class="timeline-dot"><i class="fas fa-briefcase"></i></div>
+                <div class="timeline-content hidden-element">
+                    <h3>Senior Web Developer</h3>
+                    <h4>Tech Solutions Inc.</h4>
+                    <span class="timeline-date">2024 - Present</span>
+                    <p>Leading the front-end team to build scalable web applications. Specialized in React and advanced
+                        CSS animations to deliver highly interactive user experiences.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item right-container">
+                <div class="timeline-dot"><i class="fas fa-laptop-code"></i></div>
+                <div class="timeline-content hidden-element">
+                    <h3>Freelance UI/UX Designer</h3>
+                    <h4>Self-Employed</h4>
+                    <span class="timeline-date">2022 - 2024</span>
+                    <p>Collaborated with international clients to design premium user interfaces. Delivered complete
+                        branding and web design packages with a focus on modern aesthetics.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item left-container">
+                <div class="timeline-dot"><i class="fas fa-code"></i></div>
+                <div class="timeline-content hidden-element">
+                    <h3>Front-End Developer</h3>
+                    <h4>Creative Agency</h4>
+                    <span class="timeline-date">2020 - 2022</span>
+                    <p>Developed responsive and fast-loading websites using HTML, CSS, JavaScript, and Bootstrap.
+                        Converted Figma designs into pixel-perfect web pages.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section id="education" class="education-section">
+        <h2 class="section-title">My <span>Education</span></h2>
+
+        <div class="education-container">
+            <div class="education-column">
+                <h3 class="column-title"><i class="fas fa-graduation-cap"></i> Degrees</h3>
+
+                <div class="edu-card hidden-element">
+                    <span class="edu-year">2018 - 2022</span>
+                    <h4>Bachelor of Engineering</h4>
+                    <h5>Anna University</h5>
+                    <p>Focused on Computer Science, software engineering principles, and modern web development
+                        technologies.</p>
+                </div>
+
+                <div class="edu-card hidden-element">
+                    <span class="edu-year">2016 - 2018</span>
+                    <h4>Higher Secondary</h4>
+                    <h5>State Board</h5>
+                    <p>Completed with top grades, majoring in Mathematics and Computer Science with hands-on basic
+                        programming.</p>
+                </div>
+            </div>
+
+            <div class="education-column">
+                <h3 class="column-title"><i class="fas fa-certificate"></i> Certifications</h3>
+
+                <div class="edu-card hidden-element">
+                    <span class="edu-year">2023</span>
+                    <h4>Full Stack Web Development</h4>
+                    <h5>Udemy</h5>
+                    <p>Mastered MERN stack, advanced React concepts, modern CSS frameworks, and RESTful API development.
+                    </p>
+                </div>
+
+                <div class="edu-card hidden-element">
+                    <span class="edu-year">2022</span>
+                    <h4>UI/UX Design Specialization</h4>
+                    <h5>Coursera</h5>
+                    <p>Learned wireframing, interactive prototyping, and user-centered design principles using Figma and
+                        Adobe XD.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section id="testimonials" class="testimonials-section">
+        <h2 class="section-title">Client <span>Reviews</span></h2>
+
+        <div class="testimonials-container">
+            <div class="testi-card hidden-element">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p>"An absolute pleasure to work with! The website design exceeded my expectations, and the attention to
+                    detail in animations is just mind-blowing. Highly recommended!"</p>
+                <div class="client-info">
+                    <img src="asset/man1.webp" alt="Client 1">
+                    <div class="client-details">
+                        <h4>John Doe</h4>
+                        <span>CEO, TechNova</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card hidden-element">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p>"Creative, fast, and very professional. Transformed our outdated website into a modern, responsive,
+                    and highly interactive platform. The mobile optimization is perfect."</p>
+                <div class="client-info">
+                    <img src="asset/woman1.webp" alt="Client 2">
+                    <div class="client-details">
+                        <h4>Sarah Smith</h4>
+                        <span>Marketing Head</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card hidden-element">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p>"I am incredibly impressed with the UI/UX design skills. Every interaction feels smooth and natural.
+                    Truly a talented developer who understands modern aesthetics."</p>
+                <div class="client-info">
+                    <img src="asset/man2.webp" alt="Client 3">
+                    <div class="client-details">
+                        <h4>Mike Johnson</h4>
+                        <span>Startup Founder</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section id="awards" class="awards-section">
+        <h2 class="section-title">Awards & <span>Achievements</span></h2>
+
+        <div class="awards-container">
+            <div class="award-card hidden-element">
+                <div class="award-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="award-content">
+                    <h3>Best Web Designer</h3>
+                    <span>Creative Design Awards 2023</span>
+                    <p>Recognized for outstanding creativity, innovative UI/UX patterns, and seamless user experiences
+                        in web development.</p>
+                </div>
+            </div>
+
+            <div class="award-card hidden-element">
+                <div class="award-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="award-content">
+                    <h3>Certified React Developer</h3>
+                    <span>Meta - 2022</span>
+                    <p>Successfully completed advanced frontend engineering challenges focusing on performance, state
+                        management, and scalable architecture.</p>
+                </div>
+            </div>
+
+            <div class="award-card hidden-element">
+                <div class="award-icon">
+                    <i class="fas fa-medal"></i>
+                </div>
+                <div class="award-content">
+                    <h3>Top Rated Freelancer</h3>
+                    <span>Upwork - 2023 to Present</span>
+                    <p>Maintained a 100% job success score by consistently delivering high-quality web projects for
+                        international clients.</p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+
+
+    <section id="blog" class="blog-section">
+        <h2 class="section-title">Latest <span>News</span></h2>
+
+        <div class="blog-container">
+            <div class="blog-card hidden-element">
+                <div class="blog-img">
+                    <img src="asset/po.webp" alt="Blog 1">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Oct 15, 2026</span>
+                        <span><i class="fas fa-tag"></i> Web Dev</span>
+                    </div>
+                    <h3>The Future of CSS Animations</h3>
+                    <p>Exploring how new CSS properties are replacing traditional JavaScript animation libraries for
+                        better performance.</p>
+                    <a href="404.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="blog-card hidden-element">
+                <div class="blog-img">
+                    <img src="asset/po1.webp" alt="Blog 2">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Sep 28, 2026</span>
+                        <span><i class="fas fa-tag"></i> UI/UX</span>
+                    </div>
+                    <h3>Designing for Dark Mode</h3>
+                    <p>Best practices for creating stunning dark mode interfaces that reduce eye strain and improve
+                        readability.</p>
+                    <a href="404.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="blog-card hidden-element">
+                <div class="blog-img">
+                    <img src="asset/po5.webp" alt="Blog 3">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Sep 10, 2026</span>
+                        <span><i class="fas fa-tag"></i> Tech</span>
+                    </div>
+                    <h3>AI in Web Development</h3>
+                    <p>How artificial intelligence is shaping the way developers write code and optimize user
+                        experiences in modern apps.</p>
+                    <a href="404.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Contact <span>Me</span></h2>
+
+        <div class="contact-container">
+            <div class="contact-left hidden-element">
+                <h3>Let's work together</h3>
+                <p>I'm currently available for freelance work and full-time opportunities. If you have a project that
+                    needs some creative magic, feel free to reach out!</p>
+
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>hello@yourdomain.com</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+91 98765 43210</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Salem, Tamil Nadu, India</span>
+                    </div>
+                </div>
+
+                <div class="contact-socials">
+                    <a href="404.html"><i class="fab fa-facebook-f"></i></a>
+                    <a href="404.html"><i class="fab fa-twitter"></i></a>
+                    <a href="404.html"><i class="fab fa-instagram"></i></a>
+                    <a href="404.html"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="404.html"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+            <div class="contact-right hidden-element">
+                <form class="contact-form">
+                    <div class="input-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" placeholder="Subject" required>
+                    </div>
+                    <div class="input-group">
+                        <textarea rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-about hidden-element">
+                <a href="index.html" class="logo-container">
+                    <img src="./asset/logo.webp" alt="Company Logo" class="logo-img">
+                </a>
+                <p>Building interactive, responsive, and visually stunning digital experiences. Let's create something
+                    extraordinary together.</p>
+                <div class="footer-socials">
+                    <a href="404.html"><i class="fab fa-facebook-f"></i></a>
+                    <a href="404.html"><i class="fab fa-twitter"></i></a>
+                    <a href="404.html"><i class="fab fa-instagram"></i></a>
+                    <a href="404.html"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links hidden-element">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="blog.html"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact hidden-element">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Salem, Tamil Nadu, India</li>
+                    <li><i class="fas fa-phone-alt"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> hello@yourdomain.com</li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter hidden-element">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get the latest tech news and design updates delivered to your inbox.</p>
+                <form class="newsletter-form" id="newsletterForm" novalidate>
+                    <input type="email" id="newsEmail" placeholder="Enter your email" required
+                        pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+                <span id="validationMsg" class="validation-msg"></span>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Your Name. All Rights Reserved.</p>
+            <a href="index.html" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="main.js"></script>
+
+
+    <script>
+ 
+        document.addEventListener("DOMContentLoaded", () => {
+
+ 
+            gsap.from(".gsap-text", {
+                opacity: 0,
+                y: 50,  
+                duration: 1,
+                stagger: 0.2,  
+                ease: "power3.out",
+                delay: 0.2
+            });
+
+ 
+            gsap.from(".gsap-btn", {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                ease: "power3.out",
+                delay: 1.2
+            });
+
+ 
+            gsap.from(".gsap-image", {
+                opacity: 0,
+                scale: 0.8,
+                rotation: 10,
+                duration: 1.5,
+                ease: "back.out(1.7)",
+                delay: 0.5
+            });
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+ 
+            const skillElements = document.querySelectorAll(".progress-line, .circle-fill");
+
+ 
+            const skillObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+ 
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+ 
+                        observer.unobserve(entry.target);
+                    }   
+                });
+            }, { threshold: 0.5 }); 
+
+ 
+            skillElements.forEach(el => {
+                skillObserver.observe(el);
+            });
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const serviceElements = document.querySelectorAll(".hidden-element");
+
+            const serviceObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add("show-element");
+                        }, index * 150);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            serviceElements.forEach(el => {
+                serviceObserver.observe(el);
+            });
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const filterBtns = document.querySelectorAll(".filter-btn");
+            const portfolioItems = document.querySelectorAll(".portfolio-item");
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    filterBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+
+                    const filterValue = btn.getAttribute("data-filter");
+
+                    portfolioItems.forEach(item => {
+                        item.classList.remove("show");
+                        item.classList.remove("hide");
+
+                        item.style.opacity = "1";
+                        item.style.transform = "translateY(0)";
+                        item.classList.remove("hidden-element");
+
+                        if (filterValue === "all" || item.getAttribute("data-category") === filterValue) {
+                            item.classList.add("show");
+                        } else {
+                            item.classList.add("hide");
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

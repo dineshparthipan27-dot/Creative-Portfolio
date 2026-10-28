@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>User Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-teal: #00ffcc;
+            --primary-teal-light: rgba(0, 255, 204, 0.15);
+            --bg-dark: #050505;
+            --panel-bg: rgba(15, 15, 15, 0.7);
+            --border-line: rgba(0, 255, 204, 0.15);
+
+            --text-light: #ffffff;
+            --text-muted: #b3b3b3;
+
+            --success: #00ffcc;
+            --success-light: rgba(0, 255, 204, 0.15);
+            --danger: #ff4d4d;
+            --danger-light: rgba(255, 77, 77, 0.15);
+            --warning: #f59e0b;
+            --warning-light: rgba(245, 158, 11, 0.15);
+            --purple: #b366ff;
+            --purple-light: rgba(179, 102, 255, 0.15);
+
+            --font-main: 'Poppins', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 85% 10%, rgba(0, 255, 204, 0.05), transparent 25%),
+                radial-gradient(circle at 10% 90%, rgba(179, 102, 255, 0.05), transparent 25%);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 204, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-teal);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            position: fixed;
+            height: 100vh;
+            border-right: 1px solid var(--border-line);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .sidebar-header {
+            padding: 30px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-line);
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 5, 0.95);
+            z-index: 10;
+        }
+
+        .client-profile-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .client-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-teal-light);
+            border: 1px solid var(--primary-teal);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: var(--primary-teal);
+        }
+
+        .client-name-role h3 {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 2px;
+        }
+
+        .client-name-role span {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .close-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 25px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 30px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        .menu-link i {
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .menu-link:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: var(--text-light);
+        }
+
+        .menu-link.active {
+            background: linear-gradient(90deg, var(--primary-teal-light), transparent);
+            color: var(--primary-teal);
+            border-left: 4px solid var(--primary-teal);
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+
+        .sidebar-bottom {
+            padding: 20px 0 30px 0;
+            border-top: 1px solid var(--border-line);
+        }
+
+        .logout-btn {
+            color: var(--danger);
+        }
+
+        .logout-btn:hover {
+            background-color: var(--danger-light);
+            color: var(--danger);
+            border-left-color: var(--danger);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-header {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-line);
+            position: sticky;
+            top: 0;
+            z-index: 998;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--primary-teal-light);
+            color: var(--primary-teal);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .greeting h1 {
+            font-size: 22px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .greeting span {
+            color: var(--primary-teal);
+            font-weight: 500;
+            font-size: 16px;
+            font-family: var(--font-mono);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .notification-btn:hover {
+            background: var(--primary-teal-light);
+            color: var(--primary-teal);
+            border-color: var(--primary-teal);
+        }
+
+        .notif-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 2px solid var(--bg-dark);
+        }
+
+        .view-section {
+            display: none;
+            padding: 40px;
+            flex-direction: column;
+            gap: 30px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .view-section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary-teal);
+            font-size: 24px;
+        }
+
+        .scroll-anim {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-anim.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .stat-card,
+        .content-box {
+            background: var(--panel-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .content-box:hover {
+            border-color: rgba(0, 255, 204, 0.1);
+        }
+
+        .stat-card {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(25, 25, 25, 0.8);
+            border-color: rgba(0, 255, 204, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 255, 204, 0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            background: var(--primary-teal-light);
+            color: var(--primary-teal);
+        }
+
+        .stat-details h3 {
+            font-size: 28px;
+            color: var(--text-light);
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-family: var(--font-mono);
+        }
+
+        .stat-details p {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .content-box {
+            padding: 35px;
+            width: 100%;
+        }
+
+        .project-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: rgba(0, 255, 204, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .project-header h3 {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-teal);
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--primary-teal);
+            position: relative;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .meta-item i {
+            color: var(--primary-teal);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            padding: 18px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        tr:hover td {
+            background: rgba(0, 255, 204, 0.03);
+        }
+
+        .status {
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 20px;
+            border: 1px solid transparent;
+        }
+
+        .status.paid {
+            background: var(--success-light);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .status.pending {
+            background: var(--warning-light);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .status.overdue {
+            background: var(--danger-light);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .status.ongoing {
+            background: var(--purple-light);
+            color: var(--purple);
+            border-color: var(--purple);
+        }
+
+        .action-btn {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-teal);
+            color: var(--bg-dark);
+            border-color: var(--primary-teal);
+        }
+
+        .btn-pay {
+            background: var(--primary-teal);
+            color: var(--bg-dark);
+            border: none;
+        }
+
+        .btn-pay:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .timeline {
+            margin-top: 25px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .timeline-item {
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary-teal);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-teal);
+        }
+
+        .timeline-item h4 {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .time-badge {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .milestone-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .milestone-item.completed {
+            border-color: rgba(0, 255, 204, 0.2);
+        }
+
+        .milestone-item i {
+            font-size: 20px;
+        }
+
+        .milestone-item.completed i {
+            color: var(--primary-teal);
+        }
+
+        .milestone-item.pending i {
+            color: var(--text-muted);
+        }
+
+        .milestone-details h4 {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .milestone-details p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .manager-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            background: rgba(0, 255, 204, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed var(--primary-teal);
+        }
+
+        .manager-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-teal);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            color: var(--bg-dark);
+        }
+
+        .manager-info h4 {
+            color: var(--text-light);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .manager-info p {
+            color: var(--primary-teal);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .manager-contact {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 15px;
+            color: var(--text-light);
+            outline: none;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: var(--primary-teal);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
+        }
+
+        .main-btn {
+            background: var(--primary-teal);
+            color: var(--bg-dark);
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-btn:hover {
+            box-shadow: 0 10px 25px rgba(0, 255, 204, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .success-msg {
+            color: var(--bg-dark);
+            background: var(--primary-teal);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            display: none;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .menu-toggle,
+            .close-btn {
+                display: block;
+            }
+
+            .two-col-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-header {
+                padding: 15px 20px;
+            }
+
+            .view-section {
+                padding: 20px;
+            }
+
+            .greeting h1 {
+                font-size: 18px;
+            }
+
+            .content-box {
+                padding: 25px 20px;
+                overflow-x: scroll;
+            }
+
+            .stat-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .manager-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+
+         .logo-img {
+            width: 150px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .logo-da {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo-da i {
+            font-size: 28px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-header">
+                 <div class="logo-da">
+                        <img src="./asset/logo.webp" alt="Company Logo" class="logo-img">
+                    </div>
+                    <button class="close-btn" id="closeSidebar"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li><a class="menu-link active" data-target="overview-view"><i class="fa-solid fa-house"></i>
+                            Dashboard Overview</a></li>
+                    <li><a class="menu-link" data-target="projects-view"><i class="fa-solid fa-folder-open"></i> My
+                            Projects</a></li>
+                    <li><a class="menu-link" data-target="billing-view"><i class="fa-solid fa-file-invoice-dollar"></i>
+                            Invoices & Billing</a></li>
+                    <li><a class="menu-link" data-target="support-view"><i class="fa-solid fa-headset"></i> Support &
+                            Chat</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="login.html" class="menu-link logout-btn"><i class="fa-solid fa-right-from-bracket"></i>
+                    Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="openSidebar"><i class="fa-solid fa-bars-staggered"></i></button>
+                    <div class="greeting">
+                        <h1>Welcome Back, <span id="header-client-name">Guest</span> 👋</h1>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notif-badge"></span>
+                    </div>
+                </div>
+            </header>
+
+            <div id="overview-view" class="view-section active">
+                <section class="stats-grid scroll-anim">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <div class="stat-details">
+                            <h3>3</h3>
+                            <p>Total Projects</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--purple); background: var(--purple-light);">
+                            <i class="fa-solid fa-spinner"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>1</h3>
+                            <p>Active Project</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--warning); background: var(--warning-light);">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>$1,250</h3>
+                            <p>Pending Due</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--danger); background: var(--danger-light);">
+                            <i class="fa-solid fa-cloud-arrow-down"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>12</h3>
+                            <p>Files Shared</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="two-col-grid">
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Current Project Progress</h2>
+
+                        <div class="project-card" style="border-color: rgba(0, 255, 204, 0.3);">
+                            <div class="project-header">
+                                <h3>E-Commerce Website Redesign</h3>
+                                <span class="status ongoing">In Progress</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-header"><span>Overall Completion</span> <span>65%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Currently working
+                                on the checkout page UI and payment gateway integration.</p>
+                            <a href="404.html" class="action-btn"
+                                onclick="document.querySelector('[data-target=\'projects-view\']').click();">View
+                                Details</a>
+                        </div>
+                    </section>
+
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-bullseye"></i> Upcoming Milestones</h2>
+                        <div class="milestone-list">
+                            <div class="milestone-item completed">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <div class="milestone-details">
+                                    <h4>Wireframing & UI Mockups</h4>
+                                    <p>Approved on Oct 10, 2026</p>
+                                </div>
+                            </div>
+                            <div class="milestone-item completed">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <div class="milestone-details">
+                                    <h4>Frontend Development</h4>
+                                    <p>Completed on Oct 22, 2026</p>
+                                </div>
+                            </div>
+                            <div class="milestone-item pending">
+                                <i class="fa-regular fa-circle"></i>
+                                <div class="milestone-details">
+                                    <h4>Backend Integration & CMS Setup</h4>
+                                    <p>Expected by Nov 05, 2026</p>
+                                </div>
+                            </div>
+                            <div class="milestone-item pending">
+                                <i class="fa-regular fa-circle"></i>
+                                <div class="milestone-details">
+                                    <h4>Final QA & Live Deployment</h4>
+                                    <p>Expected by Nov 15, 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="two-col-grid">
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-receipt"></i> Recent Invoices</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Invoice ID</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">#INV-2041</td>
+                                        <td style="font-weight: 700;">$1,250.00</td>
+                                        <td><span class="status pending">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">#INV-2038</td>
+                                        <td style="font-weight: 700;">$1,250.00</td>
+                                        <td><span class="status paid">Paid</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">#INV-1995</td>
+                                        <td style="font-weight: 700;">$1,500.00</td>
+                                        <td><span class="status paid">Paid</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="404.html" class="action-btn" style="margin-top: 15px;"
+                            onclick="document.querySelector('[data-target=\'billing-view\']').click();">View All
+                            Billing</a>
+                    </section>
+
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-address-card"></i> Dedicated Support</h2>
+                        <p style="color: var(--text-muted); font-size: 14px;">Need help with your ongoing projects?
+                            Contact your dedicated project manager directly.</p>
+
+                        <div class="manager-card">
+                            <div class="manager-img">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <div class="manager-info">
+                                <h4>Creative Developer</h4>
+                                <p>Lead Developer & Project Manager</p>
+                                <div class="manager-contact">
+                                    <a href="404.html" class="action-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                                    <a href="404.html" class="action-btn"><i
+                                            class="fa-solid fa-envelope"></i> Email</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="projects-view" class="view-section">
+                <section class="content-box scroll-anim full-width">
+                    <h2 class="section-title"><i class="fa-solid fa-folder-open"></i> Active & Completed Projects</h2>
+
+                    <div class="project-card scroll-anim">
+                        <div class="project-header">
+                            <h3>E-Commerce Website Redesign</h3>
+                            <span class="status ongoing">In Progress</span>
+                        </div>
+                        <p class="project-desc">A complete revamp of the existing online store focusing on mobile
+                            responsiveness, fast loading speeds, and a seamless checkout experience.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-header"><span>Phase 3: Development</span> <span>65%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="project-meta">
+                            <div class="meta-item"><i class="fa-solid fa-calendar-alt"></i> Started: Oct 20, 2026</div>
+                            <div class="meta-item"><i class="fa-solid fa-flag-checkered"></i> Target: Nov 15, 2026</div>
+                            <a href="404.html" class="action-btn">View Live Preview <i
+                                    class="fa-solid fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="project-card scroll-anim">
+                        <div class="project-header">
+                            <h3>Brand Identity Mockups</h3>
+                            <span class="status paid">Completed</span>
+                        </div>
+                        <p class="project-desc">Creation of a new brand identity including logo design, color palette
+                            selection, typography guidelines, and business card mockups.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-header"><span>Delivered</span> <span>100%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"
+                                    style="width: 100%; background: var(--success); box-shadow: 0 0 10px var(--success);">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-meta">
+                            <div class="meta-item"><i class="fa-solid fa-calendar-alt"></i> Started: Sep 05, 2026</div>
+                            <div class="meta-item"><i class="fa-solid fa-check-circle"></i> Completed: Sep 25, 2026
+                            </div>
+                            <a href="404.html" class="action-btn">Download Assets <i class="fa-solid fa-download"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="project-card scroll-anim">
+                        <div class="project-header">
+                            <h3>SEO Optimization Setup</h3>
+                            <span class="status paid">Completed</span>
+                        </div>
+                        <p class="project-desc">Technical SEO audit, keyword research, meta tag optimization, and Google
+                            Analytics setup for the corporate blog.</p>
+
+                        <div class="progress-container">
+                            <div class="progress-header"><span>Delivered</span> <span>100%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"
+                                    style="width: 100%; background: var(--success); box-shadow: 0 0 10px var(--success);">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-meta">
+                            <div class="meta-item"><i class="fa-solid fa-calendar-alt"></i> Started: Aug 10, 2026</div>
+                            <div class="meta-item"><i class="fa-solid fa-check-circle"></i> Completed: Aug 18, 2026
+                            </div>
+                            <a href="404.html" class="action-btn">View SEO Report <i class="fa-solid fa-file-pdf"></i></a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="billing-view" class="view-section">
+                <section class="stats-grid scroll-anim">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <div class="stat-details">
+                            <h3>$3,500</h3>
+                            <p>Total Paid</p>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                        <div class="stat-icon" style="color: var(--warning); background: var(--warning-light);">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>$1,250</h3>
+                            <p>Pending Amount</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-box scroll-anim full-width">
+                    <h2 class="section-title"><i class="fa-solid fa-receipt"></i> Billing History</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Invoice ID</th>
+                                    <th>Project / Description</th>
+                                    <th>Date Issued</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>#INV-2041</strong></td>
+                                    <td>E-Commerce Redesign (Milestone 2)</td>
+                                    <td>Oct 25, 2026</td>
+                                    <td style="font-family: var(--font-mono); font-weight: 700;">$1,250.00</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                    <td><a href="404.html" class="action-btn btn-pay">Pay Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#INV-2038</strong></td>
+                                    <td>E-Commerce Redesign (Advance)</td>
+                                    <td>Oct 20, 2026</td>
+                                    <td style="font-family: var(--font-mono); font-weight: 700;">$1,250.00</td>
+                                    <td><span class="status paid">Paid</span></td>
+                                    <td><a href="404.html" class="action-btn"><i class="fa-solid fa-download"></i> PDF</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#INV-1995</strong></td>
+                                    <td>Brand Identity Mockups (Final)</td>
+                                    <td>Sep 25, 2026</td>
+                                    <td style="font-family: var(--font-mono); font-weight: 700;">$1,500.00</td>
+                                    <td><span class="status paid">Paid</span></td>
+                                    <td><a href="404.html" class="action-btn"><i class="fa-solid fa-download"></i> PDF</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#INV-1950</strong></td>
+                                    <td>SEO Optimization Setup</td>
+                                    <td>Aug 18, 2026</td>
+                                    <td style="font-family: var(--font-mono); font-weight: 700;">$750.00</td>
+                                    <td><span class="status paid">Paid</span></td>
+                                    <td><a href="404.html" class="action-btn"><i class="fa-solid fa-download"></i> PDF</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div id="support-view" class="view-section">
+                <div class="two-col-grid">
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-paper-plane"></i> Send a Message</h2>
+                        <form id="supportForm" novalidate>
+                            <div id="supportSuccess" class="success-msg">Message sent successfully! I will reply soon.
+                            </div>
+
+                            <div class="input-group">
+                                <label>Subject / Topic</label>
+                                <input type="text" id="supSubject" placeholder="e.g. Update on homepage design"
+                                    required>
+                                <div class="error-msg" id="subError">Subject is required.</div>
+                            </div>
+                            <div class="input-group">
+                                <label>Related Project (Optional)</label>
+                                <select id="supProject">
+                                    <option value="" selected>General Inquiry</option>
+                                    <option value="ecommerce">E-Commerce Website Redesign</option>
+                                    <option value="branding">Brand Identity Mockups</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Your Message</label>
+                                <textarea id="supMessage"
+                                    placeholder="Type your message, feedback, or requirements here..."
+                                    required></textarea>
+                                <div class="error-msg" id="msgError">Message cannot be empty.</div>
+                            </div>
+                            <button type="submit" class="main-btn">Send Message <i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </form>
+                    </section>
+
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Previous Tickets</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ticket ID</th>
+                                        <th>Subject</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">#TCK-084</td>
+                                        <td>Add new payment gateway</td>
+                                        <td><span class="status pending">Open</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">#TCK-072</td>
+                                        <td>Logo source file request</td>
+                                        <td><span class="status paid">Resolved</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: var(--font-mono);">#TCK-065</td>
+                                        <td>Analytics script update</td>
+                                        <td><span class="status paid">Resolved</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div
+                            style="margin-top: 30px; padding: 20px; background: rgba(0,255,204,0.05); border: 1px dashed var(--primary-teal); border-radius: 12px; text-align: center;">
+                            <i class="fa-brands fa-whatsapp"
+                                style="font-size: 30px; color: var(--primary-teal); margin-bottom: 10px;"></i>
+                            <h4 style="color: var(--text-light); margin-bottom: 5px;">Need urgent help?</h4>
+                            <p style="color: var(--text-muted); font-size: 13px;">Reach out directly on WhatsApp for
+                                quicker responses during working hours.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userEmail = localStorage.getItem('userEmail') || 'client@example.com';
+            const userName = userEmail.split('@')[0];
+
+            document.getElementById('sidebar-client-name').textContent = userName;
+            document.getElementById('header-client-name').textContent = userName;
+        });
+
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const openSidebarBtn = document.getElementById('openSidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebar');
+
+        function openSidebar() { sidebar.classList.add('active'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeSidebar() { sidebar.classList.remove('active'); overlay.classList.remove('active'); document.body.style.overflow = 'auto'; }
+
+        openSidebarBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        const menuLinks = document.querySelectorAll('.sidebar-menu .menu-link');
+        const views = document.querySelectorAll('.view-section');
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                if (this.classList.contains('logout-btn')) return;
+                e.preventDefault();
+
+                if (this.classList.contains('active')) return;
+                menuLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                views.forEach(v => v.classList.remove('active'));
+                const targetId = this.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+
+                if (window.innerWidth <= 1024) closeSidebar();
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                triggerAnimations();
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
+        }, { threshold: 0.1 });
+
+        function triggerAnimations() {
+            const animElements = document.querySelectorAll('.scroll-anim');
+            animElements.forEach(el => { el.classList.remove('show'); observer.observe(el); });
+        }
+        triggerAnimations();
+
+        const supportForm = document.getElementById('supportForm');
+        if (supportForm) {
+            supportForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const sSub = document.getElementById('supSubject');
+                const sMsg = document.getElementById('supMessage');
+
+                const subErr = document.getElementById('subError');
+                const msgErr = document.getElementById('msgError');
+                const formSuccess = document.getElementById('supportSuccess');
+
+                let isValid = true;
+                sSub.classList.remove('input-error'); sMsg.classList.remove('input-error');
+                subErr.style.display = 'none'; msgErr.style.display = 'none'; formSuccess.style.display = 'none';
+
+                if (sSub.value.trim().length < 3) { sSub.classList.add('input-error'); subErr.style.display = 'block'; isValid = false; }
+                if (sMsg.value.trim().length < 10) { sMsg.classList.add('input-error'); msgErr.style.display = 'block'; isValid = false; }
+
+                if (isValid) {
+                    const btn = this.querySelector('button[type="submit"]');
+                    const orgText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...';
+
+                    setTimeout(() => {
+                        formSuccess.style.display = 'block';
+                        btn.innerHTML = orgText;
+                        window.location.href = '404.html'
+                        this.reset();
+                        setTimeout(() => formSuccess.style.display = 'none', 400);
+                    }, 500);
+                }
+            });
+
+            [document.getElementById('supSubject'), document.getElementById('supMessage')].forEach(input => {
+                if (input) {
+                    input.addEventListener('input', function () {
+                        this.classList.remove('input-error');
+                        this.nextElementSibling.style.display = 'none';
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

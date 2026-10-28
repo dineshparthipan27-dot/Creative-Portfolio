@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title> Admin Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-teal: #00ffcc;
+            --primary-teal-light: rgba(0, 255, 204, 0.15);
+            --bg-dark: #050505;
+            --panel-bg: rgba(10, 10, 10, 0.7);
+            --border-line: rgba(0, 255, 204, 0.2);
+
+            --text-light: #ffffff;
+            --text-muted: #b3b3b3;
+
+            --success: #00ffcc;
+            --success-light: rgba(0, 255, 204, 0.15);
+            --danger: #ff4d4d;
+            --danger-light: rgba(255, 77, 77, 0.15);
+            --warning: #f59e0b;
+            --warning-light: rgba(245, 158, 11, 0.15);
+            --purple: #b366ff;
+
+            --font-main: 'Poppins', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(0, 255, 204, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 255, 204, 0.05), transparent 25%);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 204, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-teal);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            position: fixed;
+            height: 100vh;
+            border-right: 1px solid var(--border-line);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .sidebar-header {
+            padding: 30px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-line);
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 5, 0.95);
+            z-index: 10;
+        }
+
+        .logo-da {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+        }
+
+        .logo-da i {
+            color: var(--primary-teal);
+            font-size: 28px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.5));
+        }
+
+        .close-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 25px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 30px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        .menu-link i {
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .menu-link:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: var(--text-light);
+        }
+
+        .menu-link.active {
+            background: linear-gradient(90deg, var(--primary-teal-light), transparent);
+            color: var(--primary-teal);
+            border-left: 4px solid var(--primary-teal);
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+
+        .sidebar-bottom {
+            padding: 20px 0 30px 0;
+            border-top: 1px solid var(--border-line);
+        }
+
+        .logout-btn {
+            color: var(--danger);
+        }
+
+        .logout-btn:hover {
+            background-color: var(--danger-light);
+            color: var(--danger);
+            border-left-color: var(--danger);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-header {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-line);
+            position: sticky;
+            top: 0;
+            z-index: 998;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--primary-teal-light);
+            color: var(--primary-teal);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .greeting h1 {
+            font-size: 22px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .welcome-name {
+            color: var(--primary-teal);
+            font-weight: 600;
+            font-size: 16px;
+            font-family: var(--font-mono);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: right;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--primary-teal);
+            font-weight: 800;
+            text-transform: uppercase;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .user-email {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 600;
+            display: block;
+        }
+
+        .view-section {
+            display: none;
+            padding: 40px;
+            flex-direction: column;
+            gap: 30px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .view-section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-weight: 700;
+            border-left: 4px solid var(--primary-teal);
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scroll-anim {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+        }
+
+        .scroll-anim.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .stat-card,
+        .content-box {
+            background: var(--panel-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 204, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-teal);
+            transform: scaleY(0);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0, 255, 204, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 204, 0.05);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            background: var(--primary-teal-light);
+            color: var(--primary-teal);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+
+        .stat-details h3 {
+            font-size: 28px;
+            color: var(--text-light);
+            font-weight: 800;
+            margin-bottom: 5px;
+            font-family: var(--font-mono);
+        }
+
+        .stat-details p {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .content-box {
+            padding: 30px;
+            width: 100%;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px 20px;
+            font-size: 15px;
+            color: var(--text-light);
+            outline: none;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .input-group select option {
+            background: #050505;
+            color: var(--text-light);
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 15px;
+            top: -10px;
+            background: #050505;
+            padding: 0 5px;
+            color: var(--primary-teal);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: var(--primary-teal);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .error-msg {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 600;
+            padding-left: 10px;
+        }
+
+        .input-error {
+            border-color: var(--danger) !important;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.2) !important;
+        }
+
+        .success-msg {
+            color: var(--bg-dark);
+            background: var(--primary-teal);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            font-weight: 700;
+            display: none;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+        }
+
+        .main-btn,
+        .action-btn {
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 30px;
+            text-decoration: none;
+        }
+
+        .main-btn {
+            background: var(--primary-teal);
+            color: var(--bg-dark);
+            padding: 16px 30px;
+            font-size: 16px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.2);
+            width: auto;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 204, 0.5);
+        }
+
+        .action-btn {
+            background: transparent;
+            color: var(--primary-teal);
+            border: 1px solid var(--primary-teal);
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-teal);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .action-btn.danger-btn {
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .action-btn.danger-btn:hover {
+            background: var(--danger);
+            color: var(--text-light);
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-teal);
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--primary-teal);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 800px;
+        }
+
+        th,
+        td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        th {
+            color: var(--primary-teal);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        tr:hover td {
+            background: rgba(0, 255, 204, 0.05);
+        }
+
+        .status {
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 20px;
+            border: 1px solid transparent;
+        }
+
+        .status.online {
+            background: var(--success-light);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .status.warning {
+            background: var(--warning-light);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .status.danger {
+            background: var(--danger-light);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .status.neutral {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline {
+            margin-top: 25px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-teal);
+            border: 2px solid #050505;
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-teal);
+        }
+
+        .timeline-item h4 {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .time-badge {
+            font-size: 11px;
+            background: rgba(0, 255, 204, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary-teal);
+            margin-right: 10px;
+            font-family: var(--font-mono);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .menu-toggle,
+            .close-btn {
+                display: block;
+            }
+
+            .two-col-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-header {
+                padding: 15px 20px;
+            }
+
+            .view-section {
+                padding: 20px;
+            }
+
+            .user-profile {
+                display: none;
+            }
+
+            .greeting h1 {
+                font-size: 18px;
+            }
+
+            .content-box {
+                padding: 20px;
+                overflow-x:scroll
+            }
+
+            .stat-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons-group {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+         .logo-img {
+            width: 150px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .logo-da {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo-da i {
+            font-size: 28px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-header">
+                    <div class="logo-da">
+                        <img src="./asset/logo.webp" alt="Company Logo" class="logo-img">
+                    </div>
+                    <button class="close-btn" id="closeSidebar"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li><a class="menu-link active" data-target="overview-view"><i class="fa-solid fa-chart-pie"></i>
+                            Dashboard Overview</a></li>
+                    <li><a class="menu-link" data-target="projects-view"><i class="fa-solid fa-briefcase"></i> Manage
+                            Projects</a></li>
+                    <li><a class="menu-link" data-target="messages-view"><i class="fa-solid fa-envelope"></i> Client
+                            Messages</a></li>
+                    <li><a class="menu-link" data-target="blog-view"><i class="fa-solid fa-pen-nib"></i> Blog Posts</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="login.html" class="menu-link logout-btn"><i class="fa-solid fa-right-from-bracket"></i>
+                    Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="openSidebar"><i class="fa-solid fa-bars-staggered"></i></button>
+                    <div class="greeting">
+                        <h1 id="page-title">Dashboard Overview <span class="welcome-name">| Workspace</span></h1>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-role">Super Admin</span>
+                            <span class="user-email" id="display-admin-email">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="overview-view" class="view-section active">
+                <section class="stats-grid scroll-anim">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+                        <div class="stat-details">
+                            <h3>24,500</h3>
+                            <p>Total Profile Views</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--purple); background: rgba(179, 102, 255, 0.15); border-color: var(--purple);">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>42</h3>
+                            <p>Completed Projects</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--warning); background: var(--warning-light); border-color: var(--warning);">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>18</h3>
+                            <p>Unread Messages</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--danger); background: var(--danger-light); border-color: var(--danger);">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>1,204</h3>
+                            <p>Blog Subscribers</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="two-col-grid">
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Website Traffic Overview</h2>
+                        <div class="chart-container"><canvas id="trafficChart"></canvas></div>
+                    </section>
+
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-globe"></i> Visitor Demographics</h2>
+                        <div class="progress-container">
+                            <div class="progress-header"><span>United States</span> <span>45%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-header"><span>India</span> <span>30%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%; background: var(--purple);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-header"><span>United Kingdom</span> <span>15%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 15%; background: var(--warning);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-header"><span>Australia</span> <span>10%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 10%; background: var(--danger);"></div>
+                            </div>
+                        </div>
+
+                        <h2 class="section-title" style="margin-top: 40px;"><i class="fa-solid fa-mobile-screen"></i>
+                            Devices Used</h2>
+                        <div class="progress-container">
+                            <div class="progress-header"><span>Mobile Phones</span> <span>65%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%; background: var(--primary-teal);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-header"><span>Desktops & Laptops</span> <span>35%</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 35%; background: var(--text-muted);"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="two-col-grid">
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h4><span class="time-badge">10 mins ago</span> New Message Received</h4>
+                                <p>John Doe sent a project inquiry via the contact form regarding a UI redesign.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h4><span class="time-badge">2 hours ago</span> Portfolio Updated</h4>
+                                <p>Project 'Fintech App UI' was published to the live website successfully.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h4><span class="time-badge">5 hours ago</span> New Subscriber</h4>
+                                <p>Alex Mercer subscribed to the weekly newsletter.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h4><span class="time-badge">1 day ago</span> Blog Post Published</h4>
+                                <p>'Mastering Web Animations' went live on the blog page and was indexed by Google.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h4><span class="time-badge">2 days ago</span> System Maintenance</h4>
+                                <p>Cleared server cache and optimized image assets for better loading speed.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h4><span class="time-badge">3 days ago</span> Comment Approved</h4>
+                                <p>Approved a comment on the article 'CSS Grid Techniques'.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="content-box scroll-anim">
+                        <h2 class="section-title"><i class="fa-solid fa-star"></i> Top Performing Projects</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Project Name</th>
+                                        <th>Views</th>
+                                        <th>Click Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Neon E-Commerce</strong></td>
+                                        <td class="welcome-name">5,420</td>
+                                        <td><span class="status online">12.5%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Crypto Dashboard</strong></td>
+                                        <td class="welcome-name">4,100</td>
+                                        <td><span class="status online">10.2%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>AI Chatbot Interface</strong></td>
+                                        <td class="welcome-name">3,850</td>
+                                        <td><span class="status warning">8.4%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Minimal Portfolio</strong></td>
+                                        <td class="welcome-name">2,900</td>
+                                        <td><span class="status warning">7.1%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Fitness App Redesign</strong></td>
+                                        <td class="welcome-name">1,500</td>
+                                        <td><span class="status danger">3.2%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="projects-view" class="view-section">
+
+                <section class="stats-grid scroll-anim">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-server"></i></div>
+                        <div class="stat-details">
+                            <h3>15.2 GB</h3>
+                            <p>Asset Storage Used</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--success); background: var(--success-light); border-color: var(--success);">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>42</h3>
+                            <p>Live Projects</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--warning); background: var(--warning-light); border-color: var(--warning);">
+                            <i class="fa-solid fa-pen-ruler"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>5</h3>
+                            <p>Draft / Ongoing</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-box scroll-anim full-width">
+                    <h2 class="section-title"><i class="fa-solid fa-plus-circle"></i> Add New Project</h2>
+                    <form id="projectForm" novalidate>
+                        <div id="projectSuccess" class="success-msg">Project Added Successfully!</div>
+
+                        <div class="two-col-grid">
+                            <div class="input-group">
+                                <label>Project Name</label>
+                                <input type="text" id="projName" placeholder="e.g. E-Commerce Redesign" required>
+                                <div class="error-msg" id="nameError">Project Name is required.</div>
+                            </div>
+                            <div class="input-group">
+                                <label>Category</label>
+                                <select id="projCategory" required>
+                                    <option value="" selected disabled>Select Category...</option>
+                                    <option value="uiux">UI/UX Design</option>
+                                    <option value="webdev">Web Development</option>
+                                    <option value="branding">Branding</option>
+                                    <option value="mobileapp">Mobile App Design</option>
+                                </select>
+                                <div class="error-msg" id="catError">Please select a category.</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Live URL / Github Link</label>
+                            <input type="url" id="projUrl" placeholder="https://example.com" required>
+                            <div class="error-msg" id="urlError">Please enter a valid URL.</div>
+                        </div>
+                        <div class="input-group">
+                            <label>Project Description</label>
+                            <textarea id="projDesc"
+                                placeholder="Briefly describe the project, technologies used, and your role..."
+                                required></textarea>
+                            <div class="error-msg" id="descError">Description cannot be empty.</div>
+                        </div>
+                        <button type="submit" class="main-btn">Publish Project <i
+                                class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </section>
+
+                <section class="content-box scroll-anim full-width">
+                    <h2 class="section-title"><i class="fa-solid fa-list-check"></i> Manage Existing Projects</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Project Name</th>
+                                    <th>Category</th>
+                                    <th>Date Added</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Fintech App UI</strong></td>
+                                    <td>UI/UX Design</td>
+                                    <td>Oct 24, 2026</td>
+                                    <td><span class="status online">Live</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Crypto Dashboard</strong></td>
+                                    <td>Web Development</td>
+                                    <td>Oct 15, 2026</td>
+                                    <td><span class="status online">Live</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Brand Identity Mockups</strong></td>
+                                    <td>Branding</td>
+                                    <td>Sep 28, 2026</td>
+                                    <td><span class="status warning">Draft</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Travel Booking Portal</strong></td>
+                                    <td>Web Development</td>
+                                    <td>Aug 12, 2026</td>
+                                    <td><span class="status online">Live</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Restaurant POS System</strong></td>
+                                    <td>UI/UX Design</td>
+                                    <td>Jul 05, 2026</td>
+                                    <td><span class="status online">Live</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Social Media Assets</strong></td>
+                                    <td>Branding</td>
+                                    <td>Jun 18, 2026</td>
+                                    <td><span class="status online">Live</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Real Estate Landing Page</strong></td>
+                                    <td>Web Development</td>
+                                    <td>May 22, 2026</td>
+                                    <td><span class="status neutral">Archived</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Restore</a> <a
+                                            href="404.html" class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>E-Learning App Concept</strong></td>
+                                    <td>Mobile App Design</td>
+                                    <td>Apr 10, 2026</td>
+                                    <td><span class="status warning">Draft</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div id="messages-view" class="view-section">
+                <section class="stats-grid scroll-anim">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-inbox"></i></div>
+                        <div class="stat-details">
+                            <h3>145</h3>
+                            <p>Total Messages</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--danger); background: var(--danger-light); border-color: var(--danger);">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>18</h3>
+                            <p>Unread</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--success); background: var(--success-light); border-color: var(--success);">
+                            <i class="fa-solid fa-check-double"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>127</h3>
+                            <p>Responded</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-box scroll-anim full-width">
+                    <h2 class="section-title"><i class="fa-solid fa-comments"></i> Client Inbox</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Email Address</th>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Alex Mercer</strong></td>
+                                    <td class="welcome-name">alex@example.com</td>
+                                    <td>UI Redesign Inquiry</td>
+                                    <td>Oct 26, 09:30 AM</td>
+                                    <td><span class="status danger">Unread</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Read</a> <a href="404.html"
+                                            class="action-btn">Reply</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sarah Connor</strong></td>
+                                    <td class="welcome-name">sarah@tech.com</td>
+                                    <td>Fullstack Developer Needed</td>
+                                    <td>Oct 25, 14:15 PM</td>
+                                    <td><span class="status warning">Pending</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Read</a> <a href="404.html"
+                                            class="action-btn">Reply</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>David Chen</strong></td>
+                                    <td class="welcome-name">david@agency.io</td>
+                                    <td>Collab Opportunity</td>
+                                    <td>Oct 24, 11:00 AM</td>
+                                    <td><span class="status online">Answered</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn neutral">View Log</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Emily Blunt</strong></td>
+                                    <td class="welcome-name">emily.b@studio.com</td>
+                                    <td>Logo & Branding Quote</td>
+                                    <td>Oct 23, 16:45 PM</td>
+                                    <td><span class="status danger">Unread</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Read</a> <a href="404.html"
+                                            class="action-btn">Reply</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Michael Scott</strong></td>
+                                    <td class="welcome-name">michael@dunder.com</td>
+                                    <td>E-Commerce Website Build</td>
+                                    <td>Oct 22, 10:20 AM</td>
+                                    <td><span class="status online">Answered</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn neutral">View Log</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Jessica Alba</strong></td>
+                                    <td class="welcome-name">jessica@honest.com</td>
+                                    <td>Bug fixing on React App</td>
+                                    <td>Oct 20, 08:15 AM</td>
+                                    <td><span class="status warning">Pending</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Read</a> <a href="404.html"
+                                            class="action-btn">Reply</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tony Stark</strong></td>
+                                    <td class="welcome-name">tony@stark.ind</td>
+                                    <td>AI Dashboard Interface</td>
+                                    <td>Oct 18, 18:30 PM</td>
+                                    <td><span class="status online">Answered</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn neutral">View Log</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bruce Wayne</strong></td>
+                                    <td class="welcome-name">bruce@wayne.ent</td>
+                                    <td>Security Audit Request</td>
+                                    <td>Oct 15, 09:00 AM</td>
+                                    <td><span class="status neutral">Archived</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn neutral">View Log</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div id="blog-view" class="view-section">
+                <section class="stats-grid scroll-anim">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="stat-details">
+                            <h3>28</h3>
+                            <p>Published Articles</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--warning); background: var(--warning-light); border-color: var(--warning);">
+                            <i class="fa-solid fa-file-pen"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>4</h3>
+                            <p>Drafts</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"
+                            style="color: var(--purple); background: rgba(179, 102, 255, 0.15); border-color: var(--purple);">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>156</h3>
+                            <p>Total Comments</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-box scroll-anim full-width">
+                    <h2 class="section-title"><i class="fa-solid fa-feather-pointed"></i> Write New Post</h2>
+                    <form id="blogForm" novalidate>
+                        <div id="blogSuccess" class="success-msg">Article saved as draft!</div>
+
+                        <div class="two-col-grid">
+                            <div class="input-group">
+                                <label>Article Title</label>
+                                <input type="text" id="blogTitle" placeholder="Enter an engaging title" required>
+                                <div class="error-msg" id="bTitleError">Title is required.</div>
+                            </div>
+                            <div class="input-group">
+                                <label>Category / Tags</label>
+                                <select id="blogCategory" required>
+                                    <option value="" selected disabled>Select Category...</option>
+                                    <option value="tutorial">Web Dev Tutorial</option>
+                                    <option value="design">UI/UX Trends</option>
+                                    <option value="career">Career Advice</option>
+                                    <option value="resources">Free Resources</option>
+                                </select>
+                                <div class="error-msg" id="bCatError">Please select a category.</div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Article Content (Markdown supported)</label>
+                            <textarea id="blogContent" placeholder="Start writing your amazing article here..." required
+                                style="min-height: 200px;"></textarea>
+                            <div class="error-msg" id="bContentError">Content cannot be empty.</div>
+                        </div>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button type="submit" class="main-btn">Publish Post <i
+                                    class="fa-solid fa-paper-plane"></i></button>
+                            <button type="button" class="main-btn"
+                                style="background: transparent; color: var(--primary-teal); border: 2px solid var(--primary-teal); box-shadow: none;"
+                                onclick="document.getElementById('blogSuccess').style.display='block'; setTimeout(()=>document.getElementById('blogSuccess').style.display='none', 3000);">Save
+                                Draft <i class="fa-solid fa-floppy-disk"></i></button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="content-box scroll-anim full-width">
+                    <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Manage Articles</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Article Title</th>
+                                    <th>Category</th>
+                                    <th>Published On</th>
+                                    <th>Views</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Mastering Web Animations</strong></td>
+                                    <td>Tutorial</td>
+                                    <td>Oct 20, 2026</td>
+                                    <td class="welcome-name">1,240</td>
+                                    <td><span class="status online">Published</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Color Theory for Devs</strong></td>
+                                    <td>UI/UX Trends</td>
+                                    <td>Oct 15, 2026</td>
+                                    <td class="welcome-name">985</td>
+                                    <td><span class="status online">Published</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Future of CSS Grid</strong></td>
+                                    <td>Tutorial</td>
+                                    <td>-</td>
+                                    <td class="welcome-name">0</td>
+                                    <td><span class="status warning">Draft</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Top 10 VS Code Extensions</strong></td>
+                                    <td>Resources</td>
+                                    <td>Sep 28, 2026</td>
+                                    <td class="welcome-name">3,450</td>
+                                    <td><span class="status online">Published</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Freelance Pricing Guide</strong></td>
+                                    <td>Career Advice</td>
+                                    <td>-</td>
+                                    <td class="welcome-name">0</td>
+                                    <td><span class="status warning">Draft</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>React Server Components</strong></td>
+                                    <td>Tutorial</td>
+                                    <td>Sep 10, 2026</td>
+                                    <td class="welcome-name">2,100</td>
+                                    <td><span class="status online">Published</span></td>
+                                    <td class="action-buttons-group"><a href="404.html" class="action-btn">Edit</a> <a href="404.html"
+                                            class="action-btn danger-btn">Delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const adminEmail = localStorage.getItem('adminEmail') || 'Welcome Back!';
+            const displayEmailEl = document.getElementById('display-admin-email');
+
+            if (adminEmail.includes('@')) {
+                displayEmailEl.textContent = adminEmail;
+            } else {
+                displayEmailEl.textContent = 'Welcome, Admin';
+                document.querySelector('.user-role').style.display = 'none';
+            }
+        });
+
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const openSidebarBtn = document.getElementById('openSidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebar');
+
+        function openSidebar() { sidebar.classList.add('active'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeSidebar() { sidebar.classList.remove('active'); overlay.classList.remove('active'); document.body.style.overflow = 'auto'; }
+
+        openSidebarBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        const menuLinks = document.querySelectorAll('.sidebar-menu .menu-link');
+        const views = document.querySelectorAll('.view-section');
+        const pageTitle = document.getElementById('page-title');
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                if (this.classList.contains('logout-btn')) return;
+                e.preventDefault();
+
+                if (this.classList.contains('active')) return;
+                menuLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                views.forEach(v => v.classList.remove('active'));
+                const targetId = this.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+
+                let titleText = this.innerText.trim();
+                pageTitle.innerHTML = `${titleText} <span class="welcome-name">| Workspace</span>`;
+
+                if (window.innerWidth <= 1024) closeSidebar();
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                triggerAnimations();
+            });
+        });
+
+        const ctx = document.getElementById('trafficChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Website Views',
+                    data: [120, 190, 150, 320, 280, 450, 400],
+                    borderColor: '#00ffcc',
+                    backgroundColor: 'rgba(0, 255, 204, 0.15)',
+                    borderWidth: 3, fill: true, tension: 0.4,
+                    pointBackgroundColor: '#050505',
+                    pointBorderColor: '#00ffcc',
+                    pointBorderWidth: 2, pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#b3b3b3' } },
+                    x: { grid: { display: false }, ticks: { color: '#b3b3b3' } }
+                }
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
+        }, { threshold: 0.1 });
+
+        function triggerAnimations() {
+            const animElements = document.querySelectorAll('.scroll-anim');
+            animElements.forEach(el => { el.classList.remove('show'); observer.observe(el); });
+        }
+        triggerAnimations();
+
+        const projectForm = document.getElementById('projectForm');
+        if (projectForm) {
+            projectForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const pName = document.getElementById('projName');
+                const pCategory = document.getElementById('projCategory');
+                const pUrl = document.getElementById('projUrl');
+                const pDesc = document.getElementById('projDesc');
+
+                const nError = document.getElementById('nameError');
+                const cError = document.getElementById('catError');
+                const uError = document.getElementById('urlError');
+                const dError = document.getElementById('descError');
+                const pSuccess = document.getElementById('projectSuccess');
+
+                let isValid = true;
+                pName.classList.remove('input-error'); pCategory.classList.remove('input-error'); pUrl.classList.remove('input-error'); pDesc.classList.remove('input-error');
+                nError.style.display = 'none'; cError.style.display = 'none'; uError.style.display = 'none'; dError.style.display = 'none'; pSuccess.style.display = 'none';
+
+                if (pName.value.trim().length < 3) { pName.classList.add('input-error'); nError.style.display = 'block'; isValid = false; }
+                if (pCategory.value === '') { pCategory.classList.add('input-error'); cError.style.display = 'block'; isValid = false; }
+                if (pUrl.value.trim() === '') { pUrl.classList.add('input-error'); uError.style.display = 'block'; isValid = false; }
+                if (pDesc.value.trim() === '') { pDesc.classList.add('input-error'); dError.style.display = 'block'; isValid = false; }
+
+                if (isValid) {
+                    const btn = this.querySelector('button[type="submit"]');
+                    const orgText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...';
+
+                    setTimeout(() => {
+                        pSuccess.style.display = 'block';
+                        btn.innerHTML = orgText;
+                        window.location.href = '404.html';
+                        this.reset();
+                        setTimeout(() => pSuccess.style.display = 'none', 300);
+                    }, 500);
+                }
+            });
+
+            const inputs = [document.getElementById('projName'), document.getElementById('projCategory'), document.getElementById('projUrl'), document.getElementById('projDesc')];
+            inputs.forEach(input => {
+                if (input) {
+                    input.addEventListener('input', function () {
+                        this.classList.remove('input-error');
+                        this.nextElementSibling.style.display = 'none';
+                    });
+                }
+            });
+        }
+
+        const blogForm = document.getElementById('blogForm');
+        if (blogForm) {
+            blogForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const bTitle = document.getElementById('blogTitle');
+                const bCategory = document.getElementById('blogCategory');
+                const bContent = document.getElementById('blogContent');
+
+                const tError = document.getElementById('bTitleError');
+                const cError = document.getElementById('bCatError');
+                const cntError = document.getElementById('bContentError');
+                const bSuccess = document.getElementById('blogSuccess');
+
+                let isValid = true;
+                bTitle.classList.remove('input-error'); bCategory.classList.remove('input-error'); bContent.classList.remove('input-error');
+                tError.style.display = 'none'; cError.style.display = 'none'; cntError.style.display = 'none'; bSuccess.style.display = 'none';
+
+                if (bTitle.value.trim().length < 3) { bTitle.classList.add('input-error'); tError.style.display = 'block'; isValid = false; }
+                if (bCategory.value === '') { bCategory.classList.add('input-error'); cError.style.display = 'block'; isValid = false; }
+                if (bContent.value.trim() === '') { bContent.classList.add('input-error'); cntError.style.display = 'block'; isValid = false; }
+
+                if (isValid) {
+                    const btn = this.querySelector('button[type="submit"]');
+                    const orgText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...';
+
+                    setTimeout(() => {
+                        bSuccess.innerHTML = "Article Published Successfully!";
+                        bSuccess.style.display = 'block';
+                        btn.innerHTML = orgText;
+                        window.location.href = '404.html';
+                        this.reset();
+                        setTimeout(() => bSuccess.style.display = 'none', 300);
+                    }, 500);
+                }
+            });
+
+            const inputs = [document.getElementById('blogTitle'), document.getElementById('blogCategory'), document.getElementById('blogContent')];
+            inputs.forEach(input => {
+                if (input) {
+                    input.addEventListener('input', function () {
+                        this.classList.remove('input-error');
+                        this.nextElementSibling.style.display = 'none';
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

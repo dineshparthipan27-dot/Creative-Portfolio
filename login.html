@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="auth-split-container">
+
+        <div class="auth-banner">
+            <div class="banner-bg-grid"></div>
+            <div class="banner-glow"></div>
+
+            <div class="banner-content">
+                <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+
+                <div class="pulse-badge">
+                    <span class="dot"></span> Secure Client Portal
+                </div>
+
+                <div class="banner-text">
+                    <h1>Enter the<br><span class="animated-gradient-text">Creative Workspace.</span></h1>
+                    <p>Access your personalized dashboard to track project progress, view invoices, and collaborate on stunning digital experiences.</p>
+                </div>
+
+                <div class="glass-stats-wrapper">
+                    <div class="glass-stat-card">
+                        <i class="fa-solid fa-ranking-star"></i>
+                        <div>
+                            <h4>100%</h4>
+                            <span>Client Satisfaction</span>
+                        </div>
+                    </div>
+                    <div class="glass-stat-card">
+                        <i class="fa-solid fa-headset"></i>
+                        <div>
+                            <h4>24/7</h4>
+                            <span>Priority Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-form-area">
+            <div class="form-container">
+
+                <div class="form-header">
+                    <div class="logo">
+                        <img src="./asset/logo.webp" alt="Company Logo" class="logo-img">
+                    </div>
+                    <p class="auth-subtitle">Initialize your secure connection to the workspace.</p>
+                </div>
+
+                <div class="pill-tabs">
+                    <div class="pill-slider" id="pillSlider"></div>
+                    <button class="pill-btn active" id="btnShowLogin">Sign In</button>
+                    <button class="pill-btn" id="btnShowSignup">Register</button>
+                </div>
+
+                <form id="loginForm" class="auth-form active-form" novalidate>
+                    <div class="input-group">
+                        <i class="fa-solid fa-fingerprint group-icon"></i>
+                        <select id="loginRole" required>
+                            <option value="" disabled selected></option>
+                            <option value="admin">Admin</option>
+                            <option value="user"> User</option>
+                        </select>
+                        <label>Account Role</label>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope group-icon"></i>
+                        <input type="email" id="loginEmail" placeholder=" " required autocomplete="off">
+                        <label>Registered Email</label>
+                        <span class="error-msg" id="loginEmailError"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock group-icon"></i>
+                        <input type="password" id="loginPassword" placeholder=" " required>
+                        <label>Secure Password</label>
+                        <i class="fa-solid fa-eye toggle-pwd"></i>
+                        <span class="error-msg" id="loginPasswordError"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <label class="remember-checkbox">
+                            <input type="checkbox">
+                            <span class="checkmark"></span> Remember Device
+                        </label>
+                        <a href="404.html" class="forgot-link">Recover Access</a>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        SIGN IN
+                    </button>
+                </form>
+
+                <form id="signupForm" class="auth-form" novalidate>
+                    <div class="input-group">
+                        <i class="fa-solid fa-user-astronaut group-icon"></i>
+                        <input type="text" id="signupName" placeholder=" " required autocomplete="off">
+                        <label>Full Name</label>
+                        <span class="error-msg" id="signupNameError"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope group-icon"></i>
+                        <input type="email" id="signupEmail" placeholder=" " required autocomplete="off">
+                        <label>Contact Email</label>
+                        <span class="error-msg" id="signupEmailError"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fa-solid fa-key group-icon"></i>
+                        <input type="password" id="signupPassword" placeholder=" " required>
+                        <label>Generate Password</label>
+                        <i class="fa-solid fa-eye toggle-pwd"></i>
+                        <span class="error-msg" id="signupPasswordError"></span>
+                    </div>
+
+                    <div class="input-group">
+                       <i class="fa-solid fa-key group-icon"></i>
+                        <input type="password" id="signupConfirm" placeholder=" " required>
+                        <label>Verify Password</label>
+                        <i class="fa-solid fa-eye toggle-pwd"></i>
+                        <span class="error-msg" id="signupConfirmError"></span>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                       Register 
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
