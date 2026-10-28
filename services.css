@@ -832,6 +832,34 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+
+.pricing-card.popular .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 16px 30px;
+    background: linear-gradient(135deg, #00ffcc, #00ffcc); 
+    color: #050505; 
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 25px #00ffcc;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+/* 3D Hover & Glow Effect */
+.pricing-card.popular .btn:hover {
+    background: linear-gradient(135deg, #00ffcc, #00ffcc);
+    box-shadow: 0 15px 35px #00ffcc;
+    transform: translateY(-5px);
+    color: #000;
+}
+
 .plan-icon {
     width: 70px;
     height: 70px;
