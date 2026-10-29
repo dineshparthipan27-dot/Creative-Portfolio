@@ -1782,6 +1782,58 @@
      transform: translateY(-3px);
  }
 
+
+ 
+.contact-form {
+    position: relative;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 30px; 
+}
+
+.error-msg {
+    color: #ff4d4d;
+    font-size: 12px;
+    font-weight: 600;
+    position: absolute;
+    bottom: -20px;
+    left: 5px;
+    display: none; 
+}
+
+.input-error {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.2) !important;
+}
+
+
+.shake-anim {
+    animation: shakeBox 0.4s ease-in-out;
+}
+
+@keyframes shakeBox {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+}
+
+
+.success-msg {
+    background: rgba(0, 255, 204, 0.1);
+    color: #00ffcc;
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    display: none; 
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
+}
+
  @media (max-width: 991px) {
      .contact-container {
          grid-template-columns: 1fr;
